@@ -1,0 +1,87 @@
+# --- build output ---
+build/
+buildDir/
+build-debug/
+build-release/
+out/
+cmake-build-*/
+cmake-build-*/*
+!cmake-build-*/CMakeLists.txt
+*.obj
+*.o
+*.lo
+*.a
+*.lib
+*.exe
+*.dll
+*.so
+*.so.*
+*.dylib
+*.pdb
+*.ilk
+*.exp
+*.idb
+*.gch
+*.pch
+*.d
+*.ninja_deps
+*.ninja_log
+compile_commands.json
+
+# --- meson / ninja ---
+meson-info/
+meson-logs/
+meson-private/
+meson-dist/
+.ninja_deps
+.ninja_log
+build.ninja
+CACHEDIR.TAG
+
+# --- CLion / JetBrains ---
+.idea/
+*.iml
+*.iws
+*.ipr
+*.uml
+.idea_modules/
+cmake-build-*/.idea/
+usage.statistics.xml
+shelf/
+workspace.xml
+
+# --- compilers / debuggers / tooling ---
+.vscode/
+*.su
+*.suo
+*.user
+*.sdf
+*.opensdf
+*.VC.db
+*.VC.VC.opendb
+.ipch
+*.gcno
+*.gcda
+*.gcov
+*.profraw
+*.profdata
+perf.data*
+valgrind*.out
+core
+core.*
+*.stackdump
+vgcore.*
+
+# --- deps / env ---
+vcpkg_installed/
+conan/
+.cache/
+*.log
+
+# --- OS junk ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- analysis output ---
+graphify-out/
