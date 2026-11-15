@@ -2,7 +2,7 @@
 // Created by ir0n1c on 11/14/2026.
 //
 
-#include "../instance.h"
+#include "instance.h"
 
 #include "memory/memory.h"
 #include "offsets.h"
