@@ -9,19 +9,19 @@ headers = files('offsets.h', 'structs.h')
 incdirs = ['.']
 
 # optional parts, so the setup survives folders being added or removed
-foreach f : ['player/player.cpp', 'player/localplayer/player.cpp', 'player/team/team.cpp', 'memory/memory.cpp', 'engine/instance.cpp']
+foreach f : ['player/player.cpp', 'player/localplayer/player.cpp', 'player/team/team.cpp', 'memory/memory.cpp', 'engine/instance/instance.cpp', 'engine/datamodel/DataModel.cpp']
   if fs.exists(f)
     sources += files(f)
   endif
 endforeach
 
-foreach f : ['player/player.h', 'player/localplayer/player.h', 'player/team/team.h', 'memory/memory.h', 'engine/instance.h']
+foreach f : ['player/player.h', 'player/localplayer/player.h', 'player/team/team.h', 'memory/memory.h', 'engine/instance/instance.h', 'engine/datamodel/DataModel.h']
   if fs.exists(f)
     headers += files(f)
   endif
 endforeach
 
-foreach d : ['player', 'player/localplayer', 'player/team', 'memory', 'engine']
+foreach d : ['player', 'player/localplayer', 'player/team', 'memory', 'engine', 'engine/instance', 'engine/datamodel']
   if fs.exists(d)
     incdirs += d
   endif
