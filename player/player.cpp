@@ -24,7 +24,7 @@ bool Player::setLocalPlayerWalkSpeed(double speed) {
         return false;
     }
 
-    return mem->wpm<double>(humanoid.address + Offsets::Humanoid::Walkspeed, speed);
+    return Memory::wpm<double>(humanoid.address + Offsets::Humanoid::Walkspeed, speed);
 }
 bool Player::setLocalPlayerJumpPower(double power) {
     Instance localPlayer = findFirstChildOfClass("Players");
@@ -38,10 +38,11 @@ bool Player::setLocalPlayerJumpPower(double power) {
     }
 
     // JumpPower or JumpHeight is game based; so this might not work
-    return mem->wpm<double>(humanoid.address + Offsets::Humanoid::JumpPower, power);
+    return Memory::wpm<double>(humanoid.address + Offsets::Humanoid::JumpPower, power);
 }
 
 bool Player::localPlayerSpeedAndJumpDefaults() {
+    // FIXME: && skips the second write when the first succeeds; should be ||
     if (setLocalPlayerWalkSpeed(16) == false && setLocalPlayerJumpPower(50) == false) {
         return false;
     }

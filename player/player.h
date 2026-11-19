@@ -57,6 +57,8 @@ public:
 
     // test funcs that will get stripped out in the release build
 #ifndef NDEBUG
+    /// \warning Both walk findFirstChildOfClass("Players") from this Player, but no
+    ///          Players service is ever located, so they currently return false.
     bool setLocalPlayerWalkSpeed(double speed);
     bool setLocalPlayerJumpPower(double power);
 

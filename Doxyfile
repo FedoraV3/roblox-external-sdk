@@ -1,0 +1,28 @@
+# Doxygen configuration for roblox-external-sdk.
+# Only the options that differ from Doxygen's defaults are listed.
+# Run: doxygen Doxyfile  ->  docs/html/index.html
+
+PROJECT_NAME           = "roblox-external-sdk"
+PROJECT_BRIEF          = "External Roblox memory SDK skeleton"
+OUTPUT_DIRECTORY       = docs
+INPUT                  = . memory engine player
+FILE_PATTERNS          = *.h *.hpp *.cpp *.md
+RECURSIVE              = YES
+EXCLUDE                = build buildDir build-debug build-release graphify-out docs
+USE_MDFILE_AS_MAINPAGE = README.md
+
+EXTRACT_ALL            = YES
+EXTRACT_STATIC         = YES
+EXTRACT_PRIVATE        = YES
+SOURCE_BROWSER         = YES
+REFERENCED_BY_RELATION = YES
+REFERENCES_RELATION    = YES
+SORT_MEMBER_DOCS       = NO
+
+GENERATE_HTML          = YES
+GENERATE_TREEVIEW      = YES
+GENERATE_LATEX         = NO
+HAVE_DOT               = NO
+QUIET                  = YES
+WARN_IF_UNDOCUMENTED   = NO
+WARN_IF_DOC_ERROR      = YES

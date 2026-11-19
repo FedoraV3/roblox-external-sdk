@@ -18,6 +18,8 @@ public:
 
     explicit operator bool() const { return address != 0; }
 
+    /// \brief Resolve the DataModel from the module base.
+    /// \warning Declared only - no definition exists, so calling it fails to link.
     static Instance getDataModel();
 
     std::vector<Instance> getChildren() const;

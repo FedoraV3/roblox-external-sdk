@@ -11,47 +11,52 @@
 #include <memory>
 
 
+// Nt* memory syscalls, resolved from ntdll at first use (not in any import lib).
+namespace nt {
+NTSTATUS read(HANDLE h, uintptr_t addr, void* buf, size_t len, PULONG done);
+NTSTATUS write(HANDLE h, uintptr_t addr, const void* buf, size_t len, PULONG done);
+} // namespace nt
+
+
 class Memory {
 private:
-    HANDLE hProcess = nullptr;
-    HWND hwnd_ = nullptr;
-    uintptr_t baseAddress_ = 0;
+    static inline HANDLE hProcess = nullptr;
+    static inline HWND hwnd_ = nullptr;
+    static inline uintptr_t baseAddress_ = 0;
 public:
-    explicit Memory(const std::string& proc_name);
+    /// \brief Find RobloxPlayerBeta.exe and fill handle/window/base.
+    /// \warning No failure path: a null handle is stored silently and every later read fails.
+    static void Initialize();
 
-    static void initialize();
+    static HANDLE handle() { return hProcess; }
+    static HWND window() { return hwnd_; }
+    static uintptr_t base() { return baseAddress_; }
 
-    HANDLE handle() const { return hProcess; }
-    HWND window() const { return hwnd_; }
-    uintptr_t base() const { return baseAddress_; }
-
-    std::string readString(uintptr_t addr);
-
-    template<typename T>
-    std::optional<T> rpm(const uintptr_t addr = 0) { return rpm<T>(hProcess, addr); }
+    static std::string readString(uintptr_t addr);
 
     template<typename T>
-    std::optional<T> rpm(const HANDLE h, const uintptr_t addr) {
+    static std::optional<T> rpm(const uintptr_t addr = 0) { return rpm<T>(hProcess, addr); }
+
+    template<typename T>
+    static std::optional<T> rpm(const HANDLE h, const uintptr_t addr) {
         T out{};
-        SIZE_T n = 0;
-        if (!ReadProcessMemory(h, reinterpret_cast<LPCVOID>(addr), &out, sizeof(T), &n) || n != sizeof(T))
+        ULONG n = 0;
+        if (nt::read(h, addr, &out, sizeof(T), &n) < 0 || n != sizeof(T))
             return std::nullopt;
         return out;
     }
 
     template<typename T>
-    bool wpm(uintptr_t addr, const T& value) const {
-        SIZE_T n = 0;
-        return WriteProcessMemory(hProcess, (LPVOID)addr, &value, sizeof(T), &n) && n == sizeof(T);
+    static bool wpm(uintptr_t addr, const T& value) {
+        ULONG n = 0;
+        return nt::write(hProcess, addr, &value, sizeof(T), &n) >= 0 && n == sizeof(T);
     }
 
-    bool wpm_bytes(uintptr_t addr, const void* data, size_t len) const {
-        SIZE_T n = 0;
-        return WriteProcessMemory(hProcess, (LPVOID)addr, data, len, &n) && n == len;
+    static bool wpm_bytes(uintptr_t addr, const void* data, size_t len) {
+        ULONG n = 0;
+        return nt::write(hProcess, addr, data, len, &n) >= 0 && n == len;
     }
 };
-
-extern std::unique_ptr<Memory> mem;
 
 
 #endif //UNTITLED5_MEMORY_H

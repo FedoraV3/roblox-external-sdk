@@ -8,13 +8,61 @@
 #include <string>
 #include <memory>
 
-std::unique_ptr<Memory> mem;
-
 struct Process {
     HANDLE hProcess;
     HWND hwnd;
     uintptr_t baseAddress;
 };
+
+namespace nt {
+namespace {
+using NtReadVirtualMemory_t = NTSTATUS(NTAPI*)(HANDLE, PVOID, PVOID, ULONG, PULONG);
+using NtWriteVirtualMemory_t = NTSTATUS(NTAPI*)(HANDLE, PVOID, PVOID, ULONG, PULONG);
+
+// resolved once, on first call
+NtReadVirtualMemory_t resolveRead() {
+    static const auto fn = reinterpret_cast<NtReadVirtualMemory_t>(
+        reinterpret_cast<void*>(GetProcAddress(GetModuleHandleW(L"ntdll.dll"), "NtReadVirtualMemory")));
+    return fn;
+}
+
+NtWriteVirtualMemory_t resolveWrite() {
+    static const auto fn = reinterpret_cast<NtWriteVirtualMemory_t>(
+        reinterpret_cast<void*>(GetProcAddress(GetModuleHandleW(L"ntdll.dll"), "NtWriteVirtualMemory")));
+    return fn;
+}
+} // namespace
+
+NTSTATUS read(HANDLE h, uintptr_t addr, void* buf, size_t len, PULONG done) {
+    const auto fn = resolveRead();
+    return fn ? fn(h, reinterpret_cast<PVOID>(addr), buf, static_cast<ULONG>(len), done) : -1;
+}
+
+// The syscall, unlike WriteProcessMemory, will not lift page protection itself,
+// so a failed write is retried once under RWX and the old protection restored.
+NTSTATUS write(HANDLE h, uintptr_t addr, const void* buf, size_t len, PULONG done) {
+    const auto fn = resolveWrite();
+    if (!fn)
+        return -1;
+
+    const auto call = [&] {
+        return fn(h, reinterpret_cast<PVOID>(addr), const_cast<PVOID>(buf), static_cast<ULONG>(len), done);
+    };
+
+    const NTSTATUS status = call();
+    if (status >= 0)
+        return status;
+
+    DWORD old = 0;
+    if (!VirtualProtectEx(h, reinterpret_cast<LPVOID>(addr), len, PAGE_EXECUTE_READWRITE, &old))
+        return status;
+
+    const NTSTATUS retried = call();
+    DWORD ignored = 0;
+    VirtualProtectEx(h, reinterpret_cast<LPVOID>(addr), len, old, &ignored);
+    return retried;
+}
+} // namespace nt
 
 namespace {
 struct WindowSearch {
@@ -82,15 +130,11 @@ static Process GetProcessByName(const std::string& processName) {
 }
 
 // basically the initializer
-Memory::Memory(const std::string& proc_name) {
-    const Process proc = GetProcessByName(proc_name);
+void Memory::Initialize() {
+    const Process proc = GetProcessByName("RobloxPlayerBeta.exe");
     hProcess = proc.hProcess;
     hwnd_ = proc.hwnd;
     baseAddress_ = proc.baseAddress;
-}
-
-void Memory::initialize() {
-    mem = std::make_unique<Memory>("RobloxPlayerBeta.exe");
 }
 
 // roblox strings are sso: inline buffer while short, heap pointer once length >= 0x10
@@ -110,7 +154,7 @@ std::string Memory::readString(uintptr_t addr) {
 
     if (sso->length >= sizeof(sso->string.buffer)) {
         std::string out(sso->length, '\0');
-        if (!ReadProcessMemory(hProcess, reinterpret_cast<LPCVOID>(sso->string.ptr), out.data(), out.size(), nullptr))
+        if (nt::read(hProcess, sso->string.ptr, out.data(), out.size(), nullptr) < 0)
             return "unknown";
         return out;
     }

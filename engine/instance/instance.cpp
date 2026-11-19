@@ -10,8 +10,8 @@
 std::vector<Instance> Instance::getChildren() const {
     std::vector<Instance> children;
 
-    const auto start = mem->rpm<uintptr_t>(mem->handle(), address + Offsets::Instance::ChildrenStart);
-    const auto end = mem->rpm<uintptr_t>(mem->handle(), address + Offsets::Instance::ChildrenEnd);
+    const auto start = Memory::rpm<uintptr_t>(Memory::handle(), address + Offsets::Instance::ChildrenStart);
+    const auto end = Memory::rpm<uintptr_t>(Memory::handle(), address + Offsets::Instance::ChildrenEnd);
     if (!start || !end || *end <= *start)
         return children;
 
@@ -25,7 +25,7 @@ std::vector<Instance> Instance::getChildren() const {
         return children;
 
     std::vector<shared_ptr_slot> slots(count);
-    if (!ReadProcessMemory(mem->handle(), reinterpret_cast<LPCVOID>(*start), slots.data(), slots.size() * sizeof(shared_ptr_slot), nullptr))
+    if (nt::read(Memory::handle(), *start, slots.data(), slots.size() * sizeof(shared_ptr_slot), nullptr) < 0)
         return children;
 
     children.reserve(count);
@@ -40,23 +40,23 @@ std::vector<Instance> Instance::getChildren() const {
 }
 
 std::string Instance::getName() const {
-    const auto container = mem->rpm<uintptr_t>(mem->handle(), address + Offsets::Instance::NameContainer);
+    const auto container = Memory::rpm<uintptr_t>(Memory::handle(), address + Offsets::Instance::NameContainer);
     if (!container)
         return "unknown";
 
-    return mem->readString(*container + Offsets::Instance::Name);
+    return Memory::readString(*container + Offsets::Instance::Name);
 }
 
 std::string Instance::getClassName() const {
-    const auto descriptor = mem->rpm<uintptr_t>(mem->handle(), address + Offsets::Instance::ClassDescriptor);
+    const auto descriptor = Memory::rpm<uintptr_t>(Memory::handle(), address + Offsets::Instance::ClassDescriptor);
     if (!descriptor)
         return "unknown";
 
-    const auto name = mem->rpm<uintptr_t>(mem->handle(), *descriptor + Offsets::Instance::ClassName);
+    const auto name = Memory::rpm<uintptr_t>(Memory::handle(), *descriptor + Offsets::Instance::ClassName);
     if (!name)
         return "unknown";
 
-    return mem->readString(*name);
+    return Memory::readString(*name);
 }
 
 Instance Instance::findFirstChild(std::string_view name) const {

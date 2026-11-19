@@ -27,6 +27,12 @@ foreach d : ['player', 'player/localplayer', 'player/team', 'memory', 'engine', 
   endif
 endforeach
 
-untitled5 = executable('untitled5', sources, headers, install : true, include_directories : include_directories(incdirs))
+# static runtime: this machine has several mingw DLLs on PATH (STLink, qemu, STM32, Android)
+# and the loader picks an old libwinpthread without nanosleep64
+runtime_link_args = ['-static-libgcc', '-static-libstdc++', '-Wl,-Bstatic,-lwinpthread,-Bdynamic']
+
+untitled5 = executable('untitled5', sources, headers, install : true,
+                       include_directories : include_directories(incdirs),
+                       link_args : runtime_link_args)
 
 test('test', untitled5)

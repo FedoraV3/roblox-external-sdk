@@ -85,3 +85,6 @@ desktop.ini
 
 # --- analysis output ---
 graphify-out/
+
+# --- generated docs ---
+docs/
