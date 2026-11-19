@@ -86,5 +86,8 @@ desktop.ini
 # --- analysis output ---
 graphify-out/
 
-# --- generated docs ---
-docs/
+# --- generated docs (committed, served by GitHub Pages) ---
+
+# --- stray build noise ---
+*TEMPb.txt
+/nul

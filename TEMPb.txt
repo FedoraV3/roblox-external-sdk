@@ -1,4 +1,0 @@
-ninja: Entering directory `C:/Users/ir0n1c/CLionProjects/untitled5/buildDir'
-ninja: no work to do.
-INFO: autodetecting backend as ninja
-INFO: calculating backend command to run: "C:\Program Files\Microsoft Visual Studio\18\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\Ninja\ninja.exe" -C C:/Users/ir0n1c/CLionProjects/untitled5/buildDir

@@ -1,10 +1,11 @@
 # Doxygen configuration for roblox-external-sdk.
 # Only the options that differ from Doxygen's defaults are listed.
-# Run: doxygen Doxyfile  ->  docs/html/index.html
+# Run: doxygen Doxyfile  ->  docs/index.html (served by GitHub Pages)
 
 PROJECT_NAME           = "roblox-external-sdk"
 PROJECT_BRIEF          = "External Roblox memory SDK skeleton"
 OUTPUT_DIRECTORY       = docs
+HTML_OUTPUT            = .
 INPUT                  = . memory engine player
 FILE_PATTERNS          = *.h *.hpp *.cpp *.md
 RECURSIVE              = YES

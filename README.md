@@ -227,10 +227,11 @@ trusting it.
 
 ### Documentation
 
-`Doxyfile` is checked in; generated output is not.
+`Doxyfile` is checked in, and the generated HTML lives in `docs/`, published with
+GitHub Pages: <https://fedorav3.github.io/roblox-external-sdk/>
 
 ```bash
-doxygen Doxyfile      # -> docs/html/index.html
+doxygen Doxyfile      # -> docs/index.html
 ```
 
 `README.md` is the Doxygen main page, and the `\warning` tags in the headers carry the

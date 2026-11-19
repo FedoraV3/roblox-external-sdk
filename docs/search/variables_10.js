@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['rate_0',['Rate',['../namespace_offsets_1_1_particle_emitter.html#ab38aae6eb7335fbcfcc0484eee3346fc',1,'Offsets::ParticleEmitter']]],
+  ['readonlygravity_1',['ReadOnlyGravity',['../namespace_offsets_1_1_workspace.html#a4b0e8e882d7bb6b51b1488eda8b077ff',1,'Offsets::Workspace']]],
+  ['realdatamodel_2',['RealDataModel',['../namespace_offsets_1_1_fake_data_model.html#a1d217851a126520d5d802921c398257a',1,'Offsets::FakeDataModel::RealDataModel'],['../namespace_offsets_1_1_render_job.html#a0716fab4bee9d82304b4705cc539b00c',1,'Offsets::RenderJob::RealDataModel']]],
+  ['referenceinstance_3',['ReferenceInstance',['../namespace_offsets_1_1_drag_detector.html#a71276e6c1337cef4dd53c5f9690a3da6',1,'Offsets::DragDetector']]],
+  ['reflectance_4',['Reflectance',['../namespace_offsets_1_1_base_part.html#a15d66901481b415c1d5d63e057ac06b1',1,'Offsets::BasePart']]],
+  ['renderview_5',['RenderView',['../namespace_offsets_1_1_render_job.html#a9a00a7e5378194e3f657e47554e6b374',1,'Offsets::RenderJob::RenderView'],['../namespace_offsets_1_1_visual_engine.html#aa61b916cfca45a8be3738560b8fd3964',1,'Offsets::VisualEngine::RenderView']]],
+  ['requirebypass_6',['RequireBypass',['../namespace_offsets_1_1_script_context.html#a3ed6bddbad64ebad740c752231016fdc',1,'Offsets::ScriptContext']]],
+  ['requireshandle_7',['RequiresHandle',['../namespace_offsets_1_1_tool.html#a3f7b5b17026cb763a25c6b548bfe59d0',1,'Offsets::Tool']]],
+  ['requireslineofsight_8',['RequiresLineOfSight',['../namespace_offsets_1_1_proximity_prompt.html#a0d055a6ee4542311f3351a2701da517d',1,'Offsets::ProximityPrompt']]],
+  ['requiresneck_9',['RequiresNeck',['../namespace_offsets_1_1_humanoid.html#ad662c74d68c56ec7de73df635423cc8d',1,'Offsets::Humanoid']]],
+  ['responsiveness_10',['Responsiveness',['../namespace_offsets_1_1_drag_detector.html#ad6d139d2a01156b91823cecbc1fcfbd7',1,'Offsets::DragDetector']]],
+  ['richtext_11',['RichText',['../namespace_offsets_1_1_gui_object.html#afa1e794fe110db8251811cbe99d1f30b',1,'Offsets::GuiObject']]],
+  ['rigtype_12',['RigType',['../namespace_offsets_1_1_humanoid.html#a67b0baac5de624a3f90c16dcab513919',1,'Offsets::Humanoid']]],
+  ['rock_13',['Rock',['../namespace_offsets_1_1_material_colors.html#a1a8a9e8d5ced335afbea4a6a41f8d187',1,'Offsets::MaterialColors']]],
+  ['rolloffmaxdistance_14',['RollOffMaxDistance',['../namespace_offsets_1_1_sound.html#a942584aaeb2e793f90cd5da1e6c9fb22',1,'Offsets::Sound']]],
+  ['rolloffmindistance_15',['RollOffMinDistance',['../namespace_offsets_1_1_sound.html#adb91eda6e4dba007c649f5d6f4a0a9f8',1,'Offsets::Sound']]],
+  ['rotation_16',['Rotation',['../namespace_offsets_1_1_camera.html#aafa6ae9ab0431778dafc76033a49bfc0',1,'Offsets::Camera::Rotation'],['../namespace_offsets_1_1_gui_object.html#a0142350845aee1eaa9f0e66030a147be',1,'Offsets::GuiObject::Rotation'],['../namespace_offsets_1_1_particle_emitter.html#ae51bea04dd7c1c6b34a8b5c3b00b3f12',1,'Offsets::ParticleEmitter::Rotation'],['../namespace_offsets_1_1_primitive.html#a42caac89376b6cebdf78e74d77f5d19d',1,'Offsets::Primitive::Rotation']]],
+  ['rotspeed_17',['RotSpeed',['../namespace_offsets_1_1_particle_emitter.html#a29d2400a7bb9a3c78cb19b1f6d2cb69f',1,'Offsets::ParticleEmitter']]],
+  ['roughnessmap_18',['RoughnessMap',['../namespace_offsets_1_1_surface_appearance.html#adc1680899f9f327c47cde0b3e2d63353',1,'Offsets::SurfaceAppearance']]]
+];
